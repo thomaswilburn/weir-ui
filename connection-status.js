@@ -76,7 +76,7 @@ class ConnectionStatus extends ElementBase {
 }
 
 .status {
-  font-size: 12px;
+  font-size: var(--font-size-5);
 }
 
 svg {
@@ -90,7 +90,7 @@ svg {
   <svg viewBox="0 0 16 16">
     <circle as="icon" cx=8 cy=8 r=7 fill="none" stroke="none" />
   </svg>
-  <span as="status">
+  <span as="status"></span> - <span as="domain"></span>
 </div>
 <div hidden as="auth">
   <input type="tel" as="totp" placeholder="Enter TOTP">

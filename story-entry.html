@@ -1,0 +1,28 @@
+<style>
+:host {
+  display: block;
+  padding: 16px 0;
+  line-height: 1.3;
+  font-family: var(--display-font);
+}
+
+[as=feed] {
+  font-size: var(--font-size-5);
+  text-transform: uppercase;
+}
+
+[as=link] {
+  font-size: var(--font-size-4);
+  color: var(--foreground);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+</style>
+<div as="feed">
+  <slot name="feed"></slot>
+</div>
+<a as="link">
+  <slot name="title"></slot>
+</a>

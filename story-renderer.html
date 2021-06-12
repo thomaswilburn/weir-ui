@@ -1,0 +1,57 @@
+<style>
+:host {
+  display: block;
+}
+
+[as=metadata] {
+  font-family: var(--display-font);
+  font-size: var(--font-size-5);
+  text-transform: uppercase;
+  line-height: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+[as=metadata][hidden] {
+  display: none;
+}
+
+[as=metadata] hr {
+  margin: 0 8px;
+  border: none;
+  border-left: 1px solid var(--foreground);
+}
+
+[as=title] {
+  font-size: var(--font-size-3);
+  font-weight: bold;
+}
+
+.content {
+  font-size: var(--font-size-4);
+  max-width: 600px;
+}
+
+.content img {
+  max-width: 100%;
+  display: block;
+  margin: 20px auto;
+}
+
+.content a {
+  color: inherit;
+}
+</style>
+<div as="metadata" hidden>
+  <div as="feed"></div>
+  <hr aria-hidden="true">
+  <div as="author"></div>
+  <hr aria-hidden="true">
+  <div as="published"></div>
+</div>
+  <div as="title"></div>
+
+<div class="content" as="content">
+  No story selected
+</div>

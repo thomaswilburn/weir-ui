@@ -9,27 +9,6 @@ class StoryEntry extends ElementBase {
     this.elements.link.addEventListener("click", this.onClick);
   }
 
-  static template = `
-<style>
-[as=feed] {
-  font-size: 80%;
-  opacity: .8;
-}
-
-[as=story] {
-
-}
-</style>
-<a as="link">
-  <div as="feed">
-    <slot name="feed"></slot>
-  </div>
-  <div as="story">
-    <slot name="title"></slot>
-  </div>
-</a>
-  `;
-
   static observedAttributes = ["story", "feed", "story"];
   static mirroredProps = ["story", "feed"];
 
@@ -52,4 +31,4 @@ class StoryEntry extends ElementBase {
 
 }
 
-StoryEntry.define("story-entry");
+StoryEntry.define("story-entry", "story-entry.html");

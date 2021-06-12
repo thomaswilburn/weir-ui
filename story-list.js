@@ -7,7 +7,7 @@ import "./story-entry.js";
 
 class StoryList extends ElementBase {
 
-  static boundMethods = ["onSelect"];
+  static boundMethods = ["onSelect", "updateCounts"];
 
   constructor() {
     super();
@@ -15,12 +15,22 @@ class StoryList extends ElementBase {
     this.stories = [];
     this.getStories();
     this.addEventListener("story-click", this.onSelect);
+
+    events.on("counts", this.updateCounts);
   }
 
   async getStories() {
-    var { total, unread, items } = await get("/stream/unread", { limit: 10 });
+    var response = await get("/stream/unread", { limit: 10 });
+    if (response.challenge) {
+      return events.fire("totp-challenge");
+    }
+    var { total, unread, items } = response;
     events.fire("counts", { total, unread })
-    this.innerHTML = "";
+    this.updateStoryList(items);
+  }
+
+  updateStoryList(items) {
+    this.innerHTML = items.length ? "" : "No unread items";
     items.forEach(item => {
       this.appendChild(h("story-entry.test", {
         story: item.id,
@@ -37,6 +47,12 @@ class StoryList extends ElementBase {
     var matching = this.stories.find(s => s.id == e.target.story);
     events.fire("story-select", matching);
   }
+
+  updateCounts(e) {
+    var { unread, total } = e;
+    this.elements.unread.innerHTML = unread;
+    this.elements.total.innerHTML = total;
+  }
 }
 
-StoryList.define("story-list");
+StoryList.define("story-list", "story-list.html");

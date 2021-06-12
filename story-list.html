@@ -1,0 +1,20 @@
+<style>
+:host {
+  display: block;
+}
+
+.counts {
+  font-size: var(--font-size-5);
+  text-transform: uppercase;
+}
+
+.counts span {
+  font-weight: bold;
+}
+</style>
+
+<div class="counts">
+  <span as="unread"></span> of <span as="total"></span>
+</div>
+
+<slot></slot>

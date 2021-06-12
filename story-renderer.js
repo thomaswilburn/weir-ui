@@ -1,5 +1,12 @@
 import ElementBase from "./lib/elementBase.js";
 import events from "./lib/events.js";
+import * as sanitize from "./lib/sanitize.js";
+
+var formatOptions = {
+  dateStyle: "medium",
+  timeStyle: "medium"
+}
+var formatter = new Intl.DateTimeFormat("en-US", formatOptions);
 
 class StoryRenderer extends ElementBase {
   static boundMethods = ["onSelect"];
@@ -11,17 +18,14 @@ class StoryRenderer extends ElementBase {
 
   onSelect(data) {
     console.log(data);
+    var published = new Date(Date.parse(data.published));
+    this.elements.metadata.removeAttribute("hidden");
     this.elements.feed.innerHTML = data.feed;
     this.elements.title.innerHTML = data.title;
-    this.elements.content.innerHTML = data.content;
+    this.elements.author.innerHTML = data.author || "Nobody";
+    this.elements.published.innerHTML = formatter.format(published);
+    this.elements.content.innerHTML = sanitize.html(data.content, data.url);
   }
-
-  static template = `
-<h4 as="feed"></h4>
-<h3 as="title"></h3>
-
-<div as="content"></div>
-  `
 }
 
-StoryRenderer.define("story-renderer");
+StoryRenderer.define("story-renderer", "story-renderer.html");
