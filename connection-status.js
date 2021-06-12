@@ -63,6 +63,7 @@ class ConnectionStatus extends ElementBase {
     var result = await post("/checkpoint", { totp: value });
     if (result.success) {
       this.setStatus("connected", "Connected");
+      events.fire("connection-established");
     } else {
       this.setStatus("error", "Bad TOTP")
     }

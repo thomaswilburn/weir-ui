@@ -7,7 +7,7 @@ import "./story-entry.js";
 
 class StoryList extends ElementBase {
 
-  static boundMethods = ["onSelect", "updateCounts"];
+  static boundMethods = ["onSelect", "updateCounts", "getStories"];
 
   constructor() {
     super();
@@ -17,6 +17,7 @@ class StoryList extends ElementBase {
     this.addEventListener("story-click", this.onSelect);
 
     events.on("counts", this.updateCounts);
+    events.on("connection-established", this.getStories);
   }
 
   async getStories() {
