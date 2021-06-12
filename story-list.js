@@ -31,7 +31,7 @@ class StoryList extends ElementBase {
   }
 
   updateStoryList(items) {
-    this.innerHTML = items.length ? "" : "No unread items";
+    this.innerHTML = "";
     items.forEach(item => {
       this.appendChild(h("story-entry.test", {
         story: item.id,

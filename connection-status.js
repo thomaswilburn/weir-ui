@@ -11,7 +11,7 @@ var fills = {
 };
 
 class ConnectionStatus extends ElementBase {
-  static boundMethods = ["networkUpdate", "ping", "authenticate"];
+  static boundMethods = ["onKey", "networkUpdate", "ping", "authenticate"];
 
   constructor() {
     super();
@@ -20,11 +20,18 @@ class ConnectionStatus extends ElementBase {
     window.addEventListener("online", this.networkUpdate);
 
     this.elements.submit.addEventListener("click", this.authenticate);
+    this.elements.totp.addEventListener("keydown", this.onKey);
 
     var url = new URL(endpoint);
     this.elements.domain.innerHTML = url.hostname;
 
+    events.on("totp-challenge", this.networkUpdate);
+
     this.ping();
+  }
+
+  connectedCallback() {
+    this.scrollIntoView();
   }
 
   async ping() {
@@ -34,8 +41,11 @@ class ConnectionStatus extends ElementBase {
       var response = await get("/checkpoint");
       if (!response.authenticated) {
         this.setStatus("error", "Unauthenticated");
+        this.scrollIntoView({ behavior: "smooth" });
+        this.elements.totp.focus({ preventScroll: true });
       } else {
         this.setStatus("connected", "Connected");
+        this.elements.totp.value = "";
       }
       this.elements.auth.toggleAttribute("hidden", response.authenticated);
     } catch (err) {
@@ -70,10 +80,17 @@ class ConnectionStatus extends ElementBase {
     this.elements.auth.toggleAttribute("hidden", result.success);
   }
 
+  onKey(e) {
+    if (e.key == "Enter") {
+      this.authenticate();
+    }
+  }
+
   static template = `
 <style>
 :host {
   display: block;
+  padding: 16px 0;
 }
 
 .status {
@@ -85,6 +102,18 @@ svg {
   display: inline-block;
 }
 
+input {
+  width: 150px;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid var(--foreground);
+}
+
+input:focus {
+  outline: 2px solid var(--foreground);
+  border: none;
+}
+
 </style>
 <div as="domain"></div>
 <div class="status">
@@ -94,7 +123,7 @@ svg {
   <span as="status"></span> - <span as="domain"></span>
 </div>
 <div hidden as="auth">
-  <input type="tel" as="totp" placeholder="Enter TOTP">
+  <input type="tel" as="totp" placeholder="Enter TOTP" maxlength=6>
   <button as="submit">Send</button>
 </div>
   `

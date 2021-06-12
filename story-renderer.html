@@ -1,6 +1,8 @@
 <style>
 :host {
   display: block;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
 [as=metadata] {
@@ -50,7 +52,7 @@
   <hr aria-hidden="true">
   <div as="published"></div>
 </div>
-  <div as="title"></div>
+  <div as="title" tabindex="-1"></div>
 
 <div class="content" as="content">
   No story selected

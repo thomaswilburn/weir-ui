@@ -36,12 +36,18 @@ body.dark {
   height: 100vh;
   grid-template-columns: minmax(250px, 1fr) minmax(300px, 2fr) 3fr;
   gap: 8px;
+  overflow: hidden;
 }
 
 section.panel {
-  overflow-y: auto;
+  min-height: 0;
+  min-width: 0;
+  max-height: 100vh;
+  overflow-y: hidden;
   scroll-snap-align: center;
   padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 600px) {
@@ -83,4 +89,8 @@ a, button {
 a:hover, a:focus,
 button:hover, button:focus {
   border-bottom: 1px solid var(--foreground);
+}
+
+story-renderer {
+  flex: 1;
 }
