@@ -1,7 +1,7 @@
 import ElementBase from "./lib/elementBase.js";
 import { get, post } from "./lib/api.js";
 import events from "./lib/events.js";
-import config from "./config.js";
+import { endpoint } from "./config.js";
 
 var fills = {
   error: "#600",
@@ -21,7 +21,7 @@ class ConnectionStatus extends ElementBase {
 
     this.elements.submit.addEventListener("click", this.authenticate);
 
-    var url = new URL(config.endpoint);
+    var url = new URL(endpoint);
     this.elements.domain.innerHTML = url.hostname;
 
     this.ping();
