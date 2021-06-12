@@ -11,10 +11,19 @@
 .counts span {
   font-weight: bold;
 }
+
+.placeholder {
+  padding: 40px;
+  text-align: center;
+  font-family: var(--display-font);
+  font-weight: lighter;
+}
 </style>
 
 <div class="counts">
   <span as="unread">__</span> of <span as="total">__</span>
 </div>
 
-<slot>No unread items</slot>
+<slot>
+  <div class="placeholder">No unread items</div>
+</slot>
