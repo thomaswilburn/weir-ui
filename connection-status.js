@@ -25,7 +25,7 @@ class ConnectionStatus extends ElementBase {
     var url = new URL(endpoint, window.location.href);
     this.elements.domain.innerHTML = url.hostname;
 
-    events.on("totp-challenge", this.networkUpdate);
+    events.on("connection:totp-challenge", this.networkUpdate);
 
     this.ping();
   }
@@ -73,7 +73,7 @@ class ConnectionStatus extends ElementBase {
     var result = await post("/checkpoint", { totp: value });
     if (result.success) {
       this.setStatus("connected", "Connected");
-      events.fire("connection-established");
+      events.fire("connection:established");
     } else {
       this.setStatus("error", "Bad TOTP")
     }

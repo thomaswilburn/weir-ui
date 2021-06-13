@@ -13,7 +13,7 @@ class StoryRenderer extends ElementBase {
 
   constructor() {
     super();
-    events.on("story-select", this.onSelect);
+    events.on("stream:selected", this.onSelect);
   }
 
   onSelect(data) {
