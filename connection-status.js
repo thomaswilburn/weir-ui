@@ -22,7 +22,7 @@ class ConnectionStatus extends ElementBase {
     this.elements.submit.addEventListener("click", this.authenticate);
     this.elements.totp.addEventListener("keydown", this.onKey);
 
-    var url = new URL(endpoint);
+    var url = new URL(endpoint, window.location.href);
     this.elements.domain.innerHTML = url.hostname;
 
     events.on("totp-challenge", this.networkUpdate);
