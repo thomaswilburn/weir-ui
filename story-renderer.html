@@ -3,6 +3,7 @@
   display: block;
   overflow-y: auto;
   max-height: 100%;
+  padding: 0 16px;
 }
 
 [as=metadata] {
@@ -28,6 +29,11 @@
 [as=title] {
   font-size: var(--font-size-3);
   font-weight: bold;
+}
+
+[as=title]:focus {
+  outline: none;
+  border: none;
 }
 
 .content {
@@ -59,7 +65,7 @@
   <hr aria-hidden="true">
   <div as="published"></div>
 </div>
-  <div as="title" tabindex="-1"></div>
+<div as="title" tabindex="-1"></div>
 
 <div class="content" as="content">
   <div class="placeholder">No story selected</div>

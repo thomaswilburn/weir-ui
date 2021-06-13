@@ -23,6 +23,8 @@ html, body {
   margin: 0;
   font-family: var(--reader-font);
   line-height: 1.6;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 body.dark {
@@ -49,6 +51,9 @@ section.panel {
   display: flex;
   flex-direction: column;
 }
+
+section.reader.panel { padding: 0; }
+story-renderer { padding: 8px 16px; }
 
 @media (max-width: 600px) {
   .app {
@@ -84,6 +89,7 @@ a, button {
   padding: 0;
   background: transparent;
   border-bottom: 1px solid transparent;
+  color: inherit;
 }
 
 a:hover, a:focus,

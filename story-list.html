@@ -18,10 +18,14 @@
   font-family: var(--display-font);
   font-weight: lighter;
 }
+
+:host .selected {
+  font-weight: bold;
+}
 </style>
 
 <div class="counts">
-  <span as="unread">__</span> of <span as="total">__</span>
+  Unread: <span as="unread">__</span> of <span as="total">__</span>
 </div>
 
 <slot>
