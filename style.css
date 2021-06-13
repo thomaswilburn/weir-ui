@@ -30,6 +30,7 @@ html, body {
 body.dark {
   --background: black;
   --foreground: white;
+  --accent: #FFA200;
 }
 
 .app {

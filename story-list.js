@@ -81,6 +81,8 @@ class StoryList extends ElementBase {
     var { unread, total } = e;
     this.elements.unread.innerHTML = unread;
     this.elements.total.innerHTML = total;
+
+    document.title = `Weir (${unread})`;
   }
 }
 
