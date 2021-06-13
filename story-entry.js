@@ -6,7 +6,7 @@ class StoryEntry extends ElementBase {
 
   constructor() {
     super();
-    this.elements.link.addEventListener("click", this.onClick);
+    this.addEventListener("click", this.onClick);
   }
 
   static observedAttributes = ["story", "feed", "story"];

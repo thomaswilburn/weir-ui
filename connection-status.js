@@ -39,7 +39,12 @@ class ConnectionStatus extends ElementBase {
     this.setStatus("unknown", "Connecting");
     try {
       var response = await get("/checkpoint");
-      if (!response.authenticated) {
+      if (!response.secure) {
+        this.setStatus("error", "Insecure");
+        this.elements.insecureQR.src = response.secretQR;
+        this.elements.insecureHash.value = response.secret;
+        this.scrollIntoView({ behavior: "smooth" });
+      } else if (!response.authenticated) {
         this.setStatus("error", "Unauthenticated");
         this.scrollIntoView({ behavior: "smooth" });
         this.elements.totp.focus({ preventScroll: true });
@@ -47,7 +52,8 @@ class ConnectionStatus extends ElementBase {
         this.setStatus("connected", "Connected");
         this.elements.totp.value = "";
       }
-      this.elements.auth.toggleAttribute("hidden", response.authenticated);
+      this.elements.auth.toggleAttribute("hidden", response.authenticated || !response.secure);
+      this.elements.insecure.toggleAttribute("hidden", response.secure);
     } catch (err) {
       this.setStatus("error", "Unreachable");
     }
@@ -85,48 +91,6 @@ class ConnectionStatus extends ElementBase {
       this.authenticate();
     }
   }
-
-  static template = `
-<style>
-:host {
-  display: block;
-  padding: 16px 0;
 }
 
-.status {
-  font-size: var(--font-size-5);
-}
-
-svg {
-  width: 12px;
-  display: inline-block;
-}
-
-input {
-  width: 150px;
-  padding: 8px;
-  border: none;
-  border-bottom: 1px solid var(--foreground);
-}
-
-input:focus {
-  outline: 2px solid var(--foreground);
-  border: none;
-}
-
-</style>
-<div as="domain"></div>
-<div class="status">
-  <svg viewBox="0 0 16 16">
-    <circle as="icon" cx=8 cy=8 r=7 fill="none" stroke="none" />
-  </svg>
-  <span as="status"></span> - <span as="domain"></span>
-</div>
-<div hidden as="auth">
-  <input type="tel" as="totp" placeholder="Enter TOTP" maxlength=6>
-  <button as="submit">Send</button>
-</div>
-  `
-}
-
-ConnectionStatus.define("connection-status");
+ConnectionStatus.define("connection-status", "connection-status.html");
