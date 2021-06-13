@@ -10,6 +10,10 @@ In addition to the DOM events used to communicate between parent and child compo
 
 * ``connection:totp-challenge`` - issued by the API module when a request is rejected. The get/post method will also throw, which can be handled or ignored.
 * ``connection:established`` - issued when the ``<connection-status>`` component successfully authorizes, so that other components can update from the server.
+* ``connection:error`` - lets UI components know that an unexpected API error has occurred
 * ``stream:counts`` - issued by the story list when there's an update in the unread/total table on the server.
-* ``stream:selected`` - issued by the story list when the user picks a story to read, so that the renderer component can display it.
+* ``stream:loading`` - status event at the start of a story refresh, for UI purposes
+* ``reader:render`` - issued by the story list when the user picks a story to read, so that the renderer component can display it.
+* ``reader:open-tab`` - open the current story in a new tab
+* ``reader:share`` - send the current story URL to the Share API
 

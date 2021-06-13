@@ -8,8 +8,13 @@ import "./story-entry.js";
 const CHECK_INTERVAL = 2 * 60 * 1000;
 
 class StoryList extends ElementBase {
-
-  static boundMethods = ["onSelect", "updateCounts", "getStories", "getCounts"];
+  static boundMethods = [
+    "onSelect",
+    "updateCounts",
+    "getStories",
+    "getCounts",
+    "markAll",
+  ];
 
   constructor() {
     super();
@@ -19,6 +24,9 @@ class StoryList extends ElementBase {
 
     events.on("stream:counts", this.updateCounts);
     events.on("connection:established", this.getStories);
+
+    events.on("stream:refresh", this.getStories);
+    events.on("stream:mark-all", this.markAll);
 
     this.timeout = null;
     this.selected = null;
@@ -41,20 +49,27 @@ class StoryList extends ElementBase {
   }
 
   async getStories() {
+    events.fire("stream:loading");
     var response = await get("/stream/unread", { limit: 10 });
     var { total, unread, items } = response;
     events.fire("stream:counts", { total, unread });
     this.updateStoryList(items);
   }
 
+  async markAll() {}
+
   updateStoryList(items) {
-    var listed = items.map(item => {
-       return h("story-entry", {
-        story: item.id,
-      }, [
-        h("span", { slot: "feed" }, item.feed),
-        h("span", { slot: "title" }, item.title)
-      ]);
+    var listed = items.map((item) => {
+      return h(
+        "story-entry",
+        {
+          story: item.id,
+        },
+        [
+          h("span", { slot: "feed" }, item.feed),
+          h("span", { slot: "title" }, item.title),
+        ]
+      );
     });
 
     this.replaceChildren(...listed);
@@ -64,14 +79,14 @@ class StoryList extends ElementBase {
   }
 
   onSelect(e) {
-    var matching = this.stories.find(s => s.id == e.target.story);
+    var matching = this.stories.find((s) => s.id == e.target.story);
     if (!matching) return;
     this.selectStory(matching);
   }
 
   selectStory(story) {
     this.selected = story;
-    events.fire("stream:selected", story);
+    events.fire("reader:render", story);
     for (var c of this.children) {
       c.classList.toggle("selected", c.story == story.id);
     }
