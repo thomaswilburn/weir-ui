@@ -2,6 +2,8 @@ import ElementBase from "./lib/elementBase.js";
 import events from "./lib/events.js";
 import * as sanitize from "./lib/sanitize.js";
 
+import "./visibility-observer.js";
+
 var formatOptions = {
   dateStyle: "medium",
   timeStyle: "medium"
@@ -33,15 +35,17 @@ class StoryRenderer extends ElementBase {
 
   onSelect(data, scrollHere) {
     this.current = data;
-    var published = new Date(Date.parse(data.published));
-    this.elements.metadata.removeAttribute("hidden");
-    this.elements.feed.innerHTML = data.feed;
-    this.elements.title.innerHTML = data.title;
-    this.elements.author.innerHTML = data.author || "Nobody";
-    this.elements.published.innerHTML = formatter.format(published);
-    this.elements.content.innerHTML = sanitize.html(data.content, data.url);
+    var date = new Date(Date.parse(data.published));
+    var { metadata, feed, title, author, published, content } = this.elements;
+    metadata.removeAttribute("hidden");
+    feed.innerHTML = data.feed;
+    title.innerHTML = data.title;
+    author.innerHTML = data.author || "Nobody";
+    published.innerHTML = formatter.format(date);
+    content.innerHTML = sanitize.html(data.content, data.url);
+    this.parentElement.scrollTop = 0;
     if (scrollHere) {
-      this.scrollIntoView();
+      this.scrollIntoView({ behavior: content.visible ? "auto" : "smooth" });
       this.elements.title.focus({ preventScroll: true });
     }
   }

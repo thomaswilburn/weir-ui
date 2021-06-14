@@ -5,7 +5,7 @@ var observer = new IntersectionObserver(function(list) {
       visible: entry.isIntersecting
     }}));
   }
-}, { threshold: .5 });
+});
 
 class VisibilityObserver extends HTMLElement {
   constructor() {
@@ -21,3 +21,5 @@ class VisibilityObserver extends HTMLElement {
     observer.unobserve(this);
   }
 }
+
+window.customElements.define("visibility-observer", VisibilityObserver);
