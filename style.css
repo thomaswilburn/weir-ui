@@ -15,7 +15,7 @@
   --font-size-4: 16px;
   --font-size-5: 12px;
 
-  --perspective: 1px;
+  --fab-offset: 60px;
 }
 
 html, body {
@@ -67,7 +67,6 @@ story-list {
 }
 
 section.reader.panel { padding: 0; }
-story-renderer { padding: 8px 16px; }
 
 @media (max-width: 600px) {
   .app {
