@@ -1,15 +1,24 @@
 <style>
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .counts {
+  position: sticky;
+  top: 0;
+  background: var(--background);
   font-size: var(--font-size-5);
   text-transform: uppercase;
 }
 
 .counts span {
   font-weight: bold;
+}
+
+.list {
+  flex: 1;
+  min-width: 0;
 }
 
 .placeholder {
@@ -22,12 +31,59 @@
 :host .selected {
   font-weight: bold;
 }
+
+.buttons {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.buttons path {
+  stroke: var(--background);
+  stroke-width: 2px;
+  fill: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0) }
+  to { transform: rotate(359deg) }
+}
+
+action-button {
+  margin: 0 20px;
+}
+
+action-button.working {
+  animation-name: spin;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
 </style>
 
 <div class="counts">
   Unread: <span as="unread">__</span> of <span as="total">__</span>
 </div>
 
-<slot>
-  <div class="placeholder">No unread items</div>
-</slot>
+<div class="list">
+  <slot>
+    <div class="placeholder">No unread items</div>
+  </slot>
+</div>
+
+<div class="buttons">
+  <action-button command="stream:refresh" as="refreshButton">
+    <svg width="24" height="24">
+      <path d="M 21 12 A 9 9 0 1 1 12 3 M 16 3 l -4 -3 m 4 3 l -4 3" />
+    </svg>
+  </action-button>
+  <action-button command="stream:mark-all" as="markButton">
+    <svg width="24" height="24">
+      <path d="M3 3 l 18 18 M 3 21 l 18 -18" />
+    </svg>
+  </action-button>
+</div>

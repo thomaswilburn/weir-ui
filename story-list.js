@@ -4,6 +4,7 @@ import events from "./lib/events.js";
 import h from "./lib/dom.js";
 
 import "./story-entry.js";
+import "./action-button.js";
 
 const CHECK_INTERVAL = 2 * 60 * 1000;
 
@@ -50,10 +51,19 @@ class StoryList extends ElementBase {
 
   async getStories() {
     events.fire("stream:loading");
-    var response = await get("/stream/unread", { limit: 10 });
-    var { total, unread, items } = response;
-    events.fire("stream:counts", { total, unread });
-    this.updateStoryList(items);
+    this.elements.refreshButton.classList.add("working");
+    this.elements.refreshButton.disabled = true;
+    try {
+      var response = await get("/stream/unread", { limit: 10 });
+      var { total, unread, items } = response;
+      events.fire("stream:counts", { total, unread });
+      await new Promise(ok => setTimeout(ok, 5000));
+      this.updateStoryList(items);
+    } catch (err) {
+      // throw a status toast if it fails
+    }
+    this.elements.refreshButton.disabled = false;
+    this.elements.refreshButton.classList.remove("working");
   }
 
   async markAll() {}
