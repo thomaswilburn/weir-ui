@@ -19,6 +19,17 @@
 
     <connection-status></connection-status>
 
+    <div class="theme-select capsule">
+      <input type="radio" name="theme" value="auto" id="theme-auto">
+      <label for="theme-auto">Auto</label>
+
+      <input type="radio" name="theme" value="light" id="theme-light">
+      <label for="theme-light">Light</label>
+
+      <input type="radio" name="theme" value="dark" id="theme-dark">
+      <label for="theme-dark">Dark</label>
+    </div>
+
     <h3>Feeds</h3>
     <button>Add feed</button>
     <button>Load feeds</button>
@@ -40,12 +51,7 @@
 
 </main>
 
-<script type="module">
-import "./connection-status.js";
-import "./story-list.js";
-import "./story-renderer.js";
-import "./lib/keys.js";
-</script>
+<script type="module" src="app.js"></script>
 
 </body>
 </html>
