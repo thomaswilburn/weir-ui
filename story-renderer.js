@@ -40,9 +40,8 @@ class StoryRenderer extends ElementBase {
     this.elements.author.innerHTML = data.author || "Nobody";
     this.elements.published.innerHTML = formatter.format(published);
     this.elements.content.innerHTML = sanitize.html(data.content, data.url);
-    this.scrollTop = 0;
     if (scrollHere) {
-      this.scrollIntoView({ behavior: "smooth" });
+      this.scrollIntoView();
       this.elements.title.focus({ preventScroll: true });
     }
   }
