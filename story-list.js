@@ -5,6 +5,7 @@ import h from "./lib/dom.js";
 
 import "./story-entry.js";
 import "./action-button.js";
+import "./visibility-observer.js";
 
 const CHECK_INTERVAL = 2 * 60 * 1000;
 
@@ -88,7 +89,7 @@ class StoryList extends ElementBase {
     this.replaceChildren(...listed);
 
     this.stories = items;
-    this.selectStory(items[0]);
+    this.selectStory(items[0], false);
   }
 
   onSelect(e) {
@@ -97,14 +98,16 @@ class StoryList extends ElementBase {
     this.selectStory(matching);
   }
 
-  selectStory(story) {
+  selectStory(story, scrollToReader = true) {
     this.selected = story;
-    events.fire("reader:render", story);
     for (var c of this.children) {
       var selected = c.story == story.id;
       c.classList.toggle("selected", selected);
-      if (selected) c.scrollIntoView({ block: "nearest" });
+      if (selected && this.elements.list.visible) {
+        c.scrollIntoView({ block: "nearest" });
+      }
     }
+    events.fire("reader:render", story, scrollToReader);
   }
 
   selectOffset(offset = 1) {

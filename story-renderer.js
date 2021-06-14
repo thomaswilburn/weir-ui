@@ -18,6 +18,10 @@ class StoryRenderer extends ElementBase {
     events.on("reader:open-tab", this.onOpen);
     this.current = null;
     this.placeholder = this.elements.content.innerHTML;
+
+    if (!("share" in navigator)) {
+      this.elements.shareButton.toggleAttribute("hidden", true);
+    }
   }
 
   clear() {
@@ -27,7 +31,7 @@ class StoryRenderer extends ElementBase {
     this.elements.content.innerHTML = this.placeholder;
   }
 
-  onSelect(data) {
+  onSelect(data, scrollHere) {
     this.current = data;
     var published = new Date(Date.parse(data.published));
     this.elements.metadata.removeAttribute("hidden");
@@ -37,8 +41,10 @@ class StoryRenderer extends ElementBase {
     this.elements.published.innerHTML = formatter.format(published);
     this.elements.content.innerHTML = sanitize.html(data.content, data.url);
     this.scrollTop = 0;
-    this.scrollIntoView({ behavior: "smooth" });
-    this.elements.title.focus({ preventScroll: true });
+    if (scrollHere) {
+      this.scrollIntoView({ behavior: "smooth" });
+      this.elements.title.focus({ preventScroll: true });
+    }
   }
 
   onShare() {

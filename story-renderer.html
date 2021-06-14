@@ -1,6 +1,7 @@
 <style>
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   max-height: 100%;
   padding: 0 16px;
@@ -26,6 +27,17 @@
   border-left: 1px solid var(--foreground);
 }
 
+@media (max-width: 600px) {
+  [as=metadata] {
+    display: block;
+    text-align: right;
+  }
+
+  [as=metadata] hr {
+    display: none;
+  }
+}
+
 [as=title] {
   font-size: var(--font-size-3);
   font-weight: bold;
@@ -37,6 +49,7 @@
 }
 
 .content {
+  flex: 1;
   font-size: var(--font-size-4);
   max-width: 600px;
 }
@@ -57,6 +70,27 @@
   font-family: var(--display-font);
   font-weight: lighter;
 }
+
+.buttons {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 16px 0;
+}
+
+.buttons path, .buttons circle {
+  stroke: var(--background);
+  stroke-width: 2px;
+  fill: none;
+}
+
+action-button {
+  margin: 0 10px;
+}
+
 </style>
 <div as="metadata" hidden>
   <div as="feed"></div>
@@ -69,4 +103,27 @@
 
 <div class="content" as="content">
   <div class="placeholder">No story selected</div>
+</div>
+
+<div class="buttons">
+  <action-button as="nextButton" command="stream:next">
+    <svg width="24" height="24">
+      <path d="M3,1l9,6l9,-6 M3,8l9,7l9,-6 M3,16l9,6l9,-6" />
+    </svg>
+  </action-button>
+
+  <action-button as="openButton" command="reader:open-tab">
+    <svg width="24" height="24">
+      <path d="M2,2L12,2l1,3L22,5L22,22L2,22L2,2 M6,10l12,0 M6,14l12,0 M6,18l9,0" />
+    </svg>
+  </action-button>
+
+  <action-button as="shareButton" command="reader:share">
+    <svg width="24" height="24">
+      <circle cx="4" cy="12" r="3" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="18" cy="18" r="3" />
+      <path d="M6,11L16,6 M6,13L16,18" />
+    </svg>
+  </action-button>
 </div>

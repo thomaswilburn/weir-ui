@@ -17,6 +17,7 @@
 }
 
 .list {
+  display: block;
   flex: 1;
   min-width: 0;
 }
@@ -37,7 +38,7 @@
   bottom: 0;
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 16px 0;
 }
 
@@ -53,7 +54,7 @@
 }
 
 action-button {
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 action-button.working {
@@ -69,11 +70,11 @@ action-button.working {
   Unread: <span as="unread">__</span> of <span as="total">__</span>
 </div>
 
-<div class="list">
+<visibility-observer as="list" class="list">
   <slot>
     <div class="placeholder">No unread items</div>
   </slot>
-</div>
+</visibility-observer>
 
 <div class="buttons">
   <action-button command="stream:refresh" as="refreshButton">
