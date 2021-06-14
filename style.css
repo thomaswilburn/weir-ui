@@ -33,6 +33,14 @@ body.dark {
   --accent: #FFA200;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: black;
+    --foreground: white;
+    --accent: #FFA200;
+  }
+}
+
 .app {
   display: grid;
   width: 100vw;
