@@ -15,6 +15,7 @@ class StoryList extends ElementBase {
     "getStories",
     "getCounts",
     "markAll",
+    "selectOffset"
   ];
 
   constructor() {
@@ -28,6 +29,9 @@ class StoryList extends ElementBase {
 
     events.on("stream:refresh", this.getStories);
     events.on("stream:mark-all", this.markAll);
+
+    events.on("stream:next", () => this.selectOffset(1));
+    events.on("stream:previous", () => this.selectOffset(-1));
 
     this.timeout = null;
     this.selected = null;
@@ -57,7 +61,6 @@ class StoryList extends ElementBase {
       var response = await get("/stream/unread", { limit: 10 });
       var { total, unread, items } = response;
       events.fire("stream:counts", { total, unread });
-      await new Promise(ok => setTimeout(ok, 5000));
       this.updateStoryList(items);
     } catch (err) {
       // throw a status toast if it fails
@@ -98,8 +101,23 @@ class StoryList extends ElementBase {
     this.selected = story;
     events.fire("reader:render", story);
     for (var c of this.children) {
-      c.classList.toggle("selected", c.story == story.id);
+      var selected = c.story == story.id;
+      c.classList.toggle("selected", selected);
+      if (selected) c.scrollIntoView({ block: "nearest" });
     }
+  }
+
+  selectOffset(offset = 1) {
+    if (!this.selected) return;
+    var currentIndex = this.stories.indexOf(this.selected);
+    if (currentIndex == -1) return;
+    var index = currentIndex + offset;
+    if (index >= this.stories.length) {
+      return this.markAll();
+    }
+    if (index < 0) return;
+    var shifted = this.stories[index];
+    this.selectStory(shifted);
   }
 
   updateCounts(e) {
