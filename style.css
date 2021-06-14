@@ -16,6 +16,8 @@
   --font-size-5: 12px;
 
   --fab-offset: 60px;
+  --fab-spacing-block: 8px;
+  --fab-spacing-inline: 8px;
 }
 
 html, body {
