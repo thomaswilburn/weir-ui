@@ -70,7 +70,21 @@ class StoryList extends ElementBase {
     this.elements.refreshButton.classList.remove("working");
   }
 
-  async markAll() {}
+  async markAll() {
+    var items = this.stories.map(s => s.id);
+    this.elements.markButton.disabled = true;
+    this.elements.markButton.classList.add("working");
+    try {
+      var response = await get("/stream/markRefresh", { items, limit: 10 });
+      var { total, unread, items } = response;
+      events.fire("stream:counts", { total, unread });
+      this.updateStoryList(items);
+    } catch (err) {
+      // throw status toast
+    }
+    this.elements.markButton.disabled = false;
+    this.elements.markButton.classList.remove("working");
+  }
 
   updateStoryList(items) {
     var listed = items.map((item) => {
