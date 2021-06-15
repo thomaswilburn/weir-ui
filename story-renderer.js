@@ -3,6 +3,7 @@ import events from "./lib/events.js";
 import * as sanitize from "./lib/sanitize.js";
 
 import "./visibility-observer.js";
+import "./action-button.js";
 
 var formatOptions = {
   dateStyle: "medium",

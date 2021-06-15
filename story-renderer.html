@@ -91,6 +91,14 @@ action-button {
   margin-inline: var(--fab-spacing-inline);
 }
 
+action-button svg {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  height: 60%;
+}
+
 </style>
 <div as="metadata" hidden>
   <div as="feed"></div>
@@ -107,19 +115,19 @@ action-button {
 
 <div class="buttons">
   <action-button as="nextButton" command="stream:next">
-    <svg width="24" height="24">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
       <path d="M3,1l9,6l9,-6 M3,8l9,7l9,-6 M3,16l9,6l9,-6" />
     </svg>
   </action-button>
 
   <action-button as="openButton" command="reader:open-tab">
-    <svg width="24" height="24">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
       <path d="M2,2L12,2l1,3L22,5L22,22L2,22L2,2 M6,10l12,0 M6,14l12,0 M6,18l9,0" />
     </svg>
   </action-button>
 
   <action-button as="shareButton" command="reader:share">
-    <svg width="24" height="24">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
       <circle cx="4" cy="12" r="3" />
       <circle cx="18" cy="6" r="3" />
       <circle cx="18" cy="18" r="3" />

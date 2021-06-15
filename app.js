@@ -1,6 +1,7 @@
 import "./connection-status.js";
 import "./story-list.js";
 import "./story-renderer.js";
+import "./feed-manager.js";
 import "./lib/keys.js";
 
 var themeBox = document.querySelector(".theme-select");

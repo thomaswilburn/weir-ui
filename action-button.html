@@ -6,6 +6,13 @@
   position: relative;
 }
 
+@media (max-width: 600px) {
+  :host {
+    width: 60px;
+    height: 60px;
+  }
+}
+
 :host([hidden]) {
   display: none;
 }
@@ -32,6 +39,10 @@ button:disabled {
   filter: saturate(0%);
   opacity: .8;
   pointer-events: none;
+}
+
+button:hover, button:focus {
+  background: var(--foreground);
 }
 
 svg {
