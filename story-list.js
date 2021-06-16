@@ -8,6 +8,7 @@ import "./action-button.js";
 import "./visibility-observer.js";
 
 const CHECK_INTERVAL = 2 * 60 * 1000;
+var favicon = document.querySelector("link[rel=icon]");
 
 class StoryList extends ElementBase {
   static boundMethods = [
@@ -145,6 +146,13 @@ class StoryList extends ElementBase {
     this.elements.total.innerHTML = total;
 
     document.title = `Weir (${unread})`;
+
+    favicon.remove();
+    favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.setAttribute("type", "image/png");
+    favicon.href = `./${unread * 1 ? "favicon" : "favicon-nulled"}.png`;
+    document.head.appendChild(favicon);
   }
 }
 
