@@ -18,7 +18,7 @@
 
   --fab-offset: 60px;
   --fab-spacing-block: 8px;
-  --fab-spacing-inline: 8px;
+  --fab-spacing-inline: 24px;
 }
 
 @media (max-width: 600px) {
