@@ -181,7 +181,7 @@ toast-alert {
 @media (max-width: 600px) {
   toast-alert {
     top: auto;
-    bottom: 0;
+    bottom: 60px;
     --direction: column;
   }
 }

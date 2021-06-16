@@ -56,6 +56,12 @@ class ToastAlert extends ElementBase {
 .toast.error {
   background: #500E;
 }
+
+@media (max-width: 600px) {
+  .toast {
+    font-size: var(--font-size-5);
+  }
+}
 </style>
 <div as="container"></div>
   `;
