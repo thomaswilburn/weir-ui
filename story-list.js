@@ -56,6 +56,7 @@ class StoryList extends ElementBase {
   }
 
   async getStories() {
+    events.fire("toast:alert", "Loading stories...");
     events.fire("stream:loading");
     this.elements.refreshButton.classList.add("working");
     this.elements.refreshButton.disabled = true;
@@ -66,6 +67,7 @@ class StoryList extends ElementBase {
       this.updateStoryList(items);
     } catch (err) {
       // throw a status toast if it fails
+      events.fire("toast:error", "Something went wrong!");
     }
     this.elements.refreshButton.disabled = false;
     this.elements.refreshButton.classList.remove("working");
@@ -73,6 +75,7 @@ class StoryList extends ElementBase {
 
   async markAll() {
     if (!this.stories.length) return this.getStories();
+    events.fire("toast:alert", "Marking all as read...");
     var items = this.stories.map(s => s.id);
     this.elements.markButton.disabled = true;
     this.elements.markButton.classList.add("working");
@@ -83,6 +86,7 @@ class StoryList extends ElementBase {
       this.updateStoryList(items);
     } catch (err) {
       // throw status toast
+      events.fire("toast:error", "Something went wrong!");
     }
     this.elements.markButton.disabled = false;
     this.elements.markButton.classList.remove("working");

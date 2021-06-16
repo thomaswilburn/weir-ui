@@ -169,3 +169,19 @@ button:hover, button:focus {
 .capsule label:last-child {
   border-radius: 0 4px 4px 0;
 }
+
+toast-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  --direction: column-reverse;
+}
+
+@media (max-width: 600px) {
+  toast-alert {
+    top: auto;
+    bottom: 0;
+    --direction: column;
+  }
+}
