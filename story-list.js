@@ -71,6 +71,7 @@ class StoryList extends ElementBase {
   }
 
   async markAll() {
+    if (!this.stories.length) return this.getStories();
     var items = this.stories.map(s => s.id);
     this.elements.markButton.disabled = true;
     this.elements.markButton.classList.add("working");
@@ -101,6 +102,7 @@ class StoryList extends ElementBase {
     });
 
     this.replaceChildren(...listed);
+    if (!items.length) this.scrollIntoView({ behavior: "smooth" });
 
     this.stories = items;
     this.selectStory(items[0], false);

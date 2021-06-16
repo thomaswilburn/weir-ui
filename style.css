@@ -21,7 +21,14 @@
   --fab-spacing-inline: 8px;
 }
 
-html, body {
+@media (max-width: 600px) {
+  :root {
+    --font-size-4: 20px;
+    --font-size-5: 16px;
+  }
+}
+
+html {
   padding: 0;
   margin: 0;
   font-family: var(--reader-font);
@@ -30,14 +37,19 @@ html, body {
   color: var(--foreground);
 }
 
-body[data-theme=dark] {
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html[data-theme=dark] {
   --background: black;
   --foreground: white;
   --accent: #FFA200;
 }
 
 @media (prefers-color-scheme: dark) {
-  body[data-theme=auto] {
+  html[data-theme=auto] {
     --background: black;
     --foreground: white;
     --accent: #FFA200;
@@ -140,7 +152,7 @@ button:hover, button:focus {
   display: block;
   flex: 1;
   border: 1px solid var(--foreground);
-  padding: 4px 8px;
+  padding: 12px 8px;
   text-transform: uppercase;
 }
 

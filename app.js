@@ -8,7 +8,7 @@ var themeBox = document.querySelector(".theme-select");
 var onThemeChange = function() {
   var selected = themeBox.querySelector(":checked");
   var theme = selected ? selected.value : "auto";
-  document.body.dataset.theme = theme;
+  document.documentElement.dataset.theme = theme;
   localStorage.setItem("weirTheme", theme);
 }
 
