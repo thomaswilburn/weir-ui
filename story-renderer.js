@@ -28,13 +28,15 @@ class StoryRenderer extends ElementBase {
   }
 
   clear() {
+    console.log("clear");
     this.current = null;
-    this.elements.metadata.toggleattribute("hidden", true);
+    this.elements.metadata.toggleAttribute("hidden", true);
     this.elements.title.innerHTML = "";
     this.elements.content.innerHTML = this.placeholder;
   }
 
   onSelect(data, scrollHere) {
+    if (!data) return this.clear();
     this.current = data;
     var date = new Date(Date.parse(data.published));
     var { metadata, feed, title, author, published, content } = this.elements;
@@ -47,8 +49,8 @@ class StoryRenderer extends ElementBase {
     this.parentElement.scrollTop = 0;
     if (scrollHere) {
       this.scrollIntoView({ behavior: content.visible ? "auto" : "smooth" });
-      this.elements.title.focus({ preventScroll: true });
     }
+    this.elements.title.focus({ preventScroll: true });
   }
 
   onShare() {

@@ -116,7 +116,7 @@ class StoryList extends ElementBase {
 
   selectStory(story, scrollToReader = true) {
     this.selected = story;
-    for (var c of this.children) {
+    if (story) for (var c of this.children) {
       var selected = c.story == story.id;
       c.classList.toggle("selected", selected);
       if (selected && this.elements.list.visible) {
