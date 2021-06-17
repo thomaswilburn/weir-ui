@@ -37,6 +37,7 @@ class StoryList extends ElementBase {
 
     this.timeout = null;
     this.selected = null;
+    this.loading = null;
   }
 
   connectedCallback() {
@@ -56,7 +57,9 @@ class StoryList extends ElementBase {
   }
 
   async getStories() {
-    // events.fire("toast:alert", "Loading stories...", 1000);
+    if (this.loading) return;
+    this.loading = true;
+    events.fire("toast:alert", "Loading...", 500);
     events.fire("stream:loading");
     this.elements.refreshButton.classList.add("working");
     this.elements.refreshButton.disabled = true;
@@ -69,13 +72,18 @@ class StoryList extends ElementBase {
       // throw a status toast if it fails
       events.fire("toast:error", "Something went wrong!");
     }
+    this.loading = false;
     this.elements.refreshButton.disabled = false;
     this.elements.refreshButton.classList.remove("working");
   }
 
   async markAll() {
-    if (!this.stories.length) return this.getStories();
-    events.fire("toast:alert", `Marking ${this.stories.length} stor${this.stories.length > 1 ? "ies" : "y"} as read...`, 1000);
+    var count = this.stories.length;
+    if (!count) return this.getStories();
+    if (this.loading) return;
+    this.loading = true;
+    var plural = count > 1 ? "items" : "item";
+    events.fire("toast:alert", `Marking ${count} ${plural} as read...`, 1500);
     var items = this.stories.map(s => s.id);
     this.elements.markButton.disabled = true;
     this.elements.markButton.classList.add("working");
@@ -88,6 +96,7 @@ class StoryList extends ElementBase {
       // throw status toast
       events.fire("toast:error", "Something went wrong!");
     }
+    this.loading = false;
     this.elements.markButton.disabled = false;
     this.elements.markButton.classList.remove("working");
   }
