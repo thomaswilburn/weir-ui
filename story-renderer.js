@@ -28,7 +28,6 @@ class StoryRenderer extends ElementBase {
   }
 
   clear() {
-    console.log("clear");
     this.current = null;
     this.elements.metadata.toggleAttribute("hidden", true);
     this.elements.title.innerHTML = "";

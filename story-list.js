@@ -56,7 +56,7 @@ class StoryList extends ElementBase {
   }
 
   async getStories() {
-    // events.fire("toast:alert", "Loading stories...");
+    // events.fire("toast:alert", "Loading stories...", 1000);
     events.fire("stream:loading");
     this.elements.refreshButton.classList.add("working");
     this.elements.refreshButton.disabled = true;
@@ -75,7 +75,7 @@ class StoryList extends ElementBase {
 
   async markAll() {
     if (!this.stories.length) return this.getStories();
-    events.fire("toast:alert", `Marking ${this.stories.length} stories as read...`);
+    events.fire("toast:alert", `Marking ${this.stories.length} stor${this.stories.length > 1 ? "ies" : "y"} as read...`, 1000);
     var items = this.stories.map(s => s.id);
     this.elements.markButton.disabled = true;
     this.elements.markButton.classList.add("working");
