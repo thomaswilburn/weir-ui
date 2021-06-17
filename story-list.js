@@ -54,6 +54,11 @@ class StoryList extends ElementBase {
     var response = await get("/stream/status");
     var { total, unread, items } = response;
     events.fire("stream:counts", { total, unread });
+    // if we have no stories loaded and there are unread items,
+    // just go ahead and fetch them
+    if (!this.stories.length && unread * 1) {
+      this.getStories();
+    }
   }
 
   async getStories() {
