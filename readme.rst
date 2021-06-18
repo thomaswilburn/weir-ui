@@ -16,4 +16,6 @@ In addition to the DOM events used to communicate between parent and child compo
 * ``reader:render`` - issued by the story list when the user picks a story to read, so that the renderer component can display it.
 * ``reader:open-tab`` - open the current story in a new tab
 * ``reader:share`` - send the current story URL to the Share API
-
+* ``toast:alert`` - show a toast message, with the second parameter setting its duration
+* ``toast:error`` - show a toast with error styling
+* ``view:*`` - ask the specified panel or UI element to scroll itself into view

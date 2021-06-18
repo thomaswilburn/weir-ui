@@ -66,7 +66,7 @@ html[data-theme=dark] {
   overflow: hidden;
 }
 
-section.panel {
+.panel {
   min-height: 0;
   min-width: 0;
   max-height: 100vh;
@@ -78,7 +78,7 @@ section.panel {
   align-items: stretch;
 }
 
-section.admin.panel {
+.admin.panel {
   padding: 0 16px;
 }
 
@@ -90,7 +90,7 @@ section.admin.panel {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  section.panel {
+  .panel {
     width: 100vw;
   }
 }

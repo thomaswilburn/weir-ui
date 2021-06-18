@@ -12,13 +12,14 @@ var formatOptions = {
 var formatter = new Intl.DateTimeFormat("en-US", formatOptions);
 
 class StoryRenderer extends ElementBase {
-  static boundMethods = ["onSelect", "onShare", "onOpen"];
+  static boundMethods = ["onSelect", "onShare", "onOpen", "onFeature"];
 
   constructor() {
     super();
     events.on("reader:render", this.onSelect);
     events.on("reader:share", this.onShare);
     events.on("reader:open-tab", this.onOpen);
+    events.on("view:reader",this.onFeature);
     this.current = null;
     this.placeholder = this.elements.content.innerHTML;
 
@@ -34,7 +35,7 @@ class StoryRenderer extends ElementBase {
     this.elements.content.innerHTML = this.placeholder;
   }
 
-  onSelect(data, scrollHere) {
+  onSelect(data) {
     if (!data) return this.clear();
     this.current = data;
     var date = new Date(Date.parse(data.published));
@@ -45,11 +46,14 @@ class StoryRenderer extends ElementBase {
     author.innerHTML = data.author || "Nobody";
     published.innerHTML = formatter.format(date);
     content.innerHTML = sanitize.html(data.content, data.url);
-    this.parentElement.scrollTop = 0;
-    if (scrollHere) {
-      this.scrollIntoView({ behavior: content.visible ? "auto" : "smooth" });
-    }
+    this.dispatch("requestscroll", { top: 0 });
     this.elements.title.focus({ preventScroll: true });
+  }
+
+  onFeature() {
+    this.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 
   onShare() {

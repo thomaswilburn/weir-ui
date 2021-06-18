@@ -1,9 +1,11 @@
 import "./connection-status.js";
+import "./feed-manager.js";
+import "./scroll-panel.js";
 import "./story-list.js";
 import "./story-renderer.js";
-import "./feed-manager.js";
-import "./lib/keys.js";
 import "./toast-alert.js";
+
+import "./lib/keys.js";
 
 var themeBox = document.querySelector(".theme-select");
 var onThemeChange = function() {

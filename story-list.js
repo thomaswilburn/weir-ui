@@ -17,7 +17,8 @@ class StoryList extends ElementBase {
     "getStories",
     "getCounts",
     "markAll",
-    "selectOffset"
+    "selectOffset",
+    "onFeature"
   ];
 
   constructor() {
@@ -28,6 +29,7 @@ class StoryList extends ElementBase {
 
     events.on("stream:counts", this.updateCounts);
     events.on("connection:established", this.getStories);
+    events.on("view:list", this.onFeature);
 
     events.on("stream:refresh", this.getStories);
     events.on("stream:mark-all", this.markAll);
@@ -43,6 +45,12 @@ class StoryList extends ElementBase {
   connectedCallback() {
     this.getStories();
     window.setTimeout(this.getCounts, CHECK_INTERVAL);
+  }
+
+  onFeature() {
+    this.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 
   async getCounts() {
@@ -121,7 +129,7 @@ class StoryList extends ElementBase {
     });
 
     this.replaceChildren(...listed);
-    if (!items.length) this.scrollIntoView({ behavior: "smooth" });
+    if (!items.length) events.fire("view:list");
 
     this.stories = items;
     this.selectStory(items[0], false);
@@ -131,18 +139,19 @@ class StoryList extends ElementBase {
     var matching = this.stories.find((s) => s.id == e.target.story);
     if (!matching) return;
     this.selectStory(matching);
+    events.fire("view:reader");
   }
 
-  selectStory(story, scrollToReader = true) {
+  selectStory(story) {
     this.selected = story;
     if (story) for (var c of this.children) {
       var selected = c.story == story.id;
       c.classList.toggle("selected", selected);
       if (selected && this.elements.list.visible) {
-        c.scrollIntoView({ block: "nearest" });
+        this.dispatch("requestscroll", { element: c, behavior: "smooth" });
       }
     }
-    events.fire("reader:render", story, scrollToReader);
+    events.fire("reader:render", story);
   }
 
   selectOffset(offset = 1) {
