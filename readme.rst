@@ -11,6 +11,7 @@ For simplicity's sake, configuration is simply a module located at `config.js` w
 * ``endpoint`` - the API base URL for the Weir server
 * ``sanitizerBlocklist`` - an array of CSS selectors that should be removed during sanitization before displaying a story
 * ``pingInterval`` - how often the story list should update unread counts from the server
+* ``updateLimit`` - how many stories should be pulled/shown in the list at any time
 
 Events
 ------
