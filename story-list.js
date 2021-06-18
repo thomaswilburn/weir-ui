@@ -2,12 +2,14 @@ import ElementBase from "./lib/elementBase.js";
 import { get, post } from "./lib/api.js";
 import events from "./lib/events.js";
 import h from "./lib/dom.js";
+import * as config from "./config.js";
 
 import "./story-entry.js";
 import "./action-button.js";
 import "./visibility-observer.js";
 
-const CHECK_INTERVAL = 2 * 60 * 1000;
+const CHECK_INTERVAL = config.pingInterval || 2 * 60 * 1000;
+const UPDATE_LIMIT = config.updateLimit || 10;
 var favicon = document.querySelector("link[rel=icon]");
 
 class StoryList extends ElementBase {
@@ -77,7 +79,7 @@ class StoryList extends ElementBase {
     this.elements.refreshButton.classList.add("working");
     this.elements.refreshButton.disabled = true;
     try {
-      var response = await get("/stream/unread", { limit: 10 });
+      var response = await get("/stream/unread", { limit: UPDATE_LIMIT });
       var { total, unread, items } = response;
       events.fire("stream:counts", { total, unread });
       this.updateStoryList(items);
@@ -101,7 +103,7 @@ class StoryList extends ElementBase {
     this.elements.markButton.disabled = true;
     this.elements.markButton.classList.add("working");
     try {
-      var response = await get("/stream/markRefresh", { items, limit: 10 });
+      var response = await get("/stream/markRefresh", { items, limit: UPDATE_LIMIT });
       var { total, unread, items } = response;
       events.fire("stream:counts", { total, unread });
       this.updateStoryList(items);
