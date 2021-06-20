@@ -76,6 +76,7 @@ html[data-theme=dark] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  position: relative;
 }
 
 .admin.panel {
@@ -99,6 +100,22 @@ html[data-theme=dark] {
 
 story-list { flex: 1; }
 story-renderer { flex: 1; }
+letter-dream {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-top: 250%;
+  width: 100%;
+  max-height: 100%;
+  pointer-events: none;
+  color: #8883;
+  /*animation: fade-letters 5s linear both;*/
+}
+
+@keyframes fade-letters {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
 
 /* general UI */
 
