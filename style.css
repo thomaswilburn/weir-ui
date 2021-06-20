@@ -110,6 +110,12 @@ letter-dream {
   z-index: -1;
 }
 
+feed-manager {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 story-list { flex: 1; }
 story-renderer { flex: 1; }
 
