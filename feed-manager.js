@@ -13,6 +13,7 @@ class FeedManager extends ElementBase {
     this.elements.subscribeButton.addEventListener("click", this.subscribe);
     this.elements.refreshButton.addEventListener("click", this.refresh);
     this.elements.tbody.addEventListener("click", this.unsubscribe);
+    this.elements.subscribeURL.addEventListener("keydown", e => e.stopPropagation());
   }
 
   expand() {

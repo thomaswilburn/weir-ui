@@ -87,6 +87,7 @@ class ConnectionStatus extends ElementBase {
   }
 
   onKey(e) {
+    e.stopImmediatePropagation();
     if (e.key == "Enter") {
       this.authenticate();
     }
