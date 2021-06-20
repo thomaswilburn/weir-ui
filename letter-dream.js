@@ -34,15 +34,16 @@ class LetterDream extends ElementBase {
         var letter = h("div.letter", text);
         this.shadowRoot.appendChild(letter);
         var duration = (30 + Math.random() * 30) * 1000;
-        var delay = (Math.random() * 25) * 1000;
+        var delay = (Math.random() * 60) * 1000;
         letter.style.top = Math.random() * 110 - 5 + "%";
         letter.style.left = Math.random() * 110 - 5 + "%";
         letter.style.fontFamily = pick(families);
-        letter.style.fontSize = 10 + Math.random() * 60 + "px";
+        letter.style.fontSize = 20 + Math.random() * 50 + "px";
         letter.style.fontWeight = pick(weights);
 
-        var dx = Math.random() * 100 - 50;
-        var dy = Math.random() * 100 - 50;
+        var distance = 200;
+        var dx = Math.random() * distance - (distance / 2);
+        var dy = Math.random() * distance - (distance / 2);
         letter.animate([
           { transform: `translate(0%, 0%)`, opacity: 0 },
           { opacity: 1 },

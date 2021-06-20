@@ -10,6 +10,7 @@
   --foreground: black;
   --accent: #808;
 
+
   --font-size-1: 48px;
   --font-size-2: 32px;
   --font-size-3: 24px;
@@ -79,10 +80,6 @@ html[data-theme=dark] {
   position: relative;
 }
 
-.admin.panel {
-  padding: 0 16px;
-}
-
 @media (max-width: 600px) {
   .app {
     overflow-x: auto;
@@ -96,26 +93,26 @@ html[data-theme=dark] {
   }
 }
 
-/* components */
+/* columns */
 
-story-list { flex: 1; }
-story-renderer { flex: 1; }
+.admin.panel {
+  padding: 0 16px;
+}
+
 letter-dream {
   position: absolute;
   left: 0;
   bottom: 0;
-  padding-top: 250%;
   width: 100%;
-  max-height: 100%;
+  height: 100%;
   pointer-events: none;
   color: #8883;
-  /*animation: fade-letters 5s linear both;*/
+  z-index: -1;
 }
 
-@keyframes fade-letters {
-  from { opacity: 0 }
-  to { opacity: 1 }
-}
+story-list { flex: 1; }
+story-renderer { flex: 1; }
+
 
 /* general UI */
 
@@ -156,6 +153,7 @@ button:hover, button:focus {
   font-size: var(--font-size-5);
   text-align: center;
   margin: 16px 0;
+  background: var(--background);
 }
 
 .capsule input {
