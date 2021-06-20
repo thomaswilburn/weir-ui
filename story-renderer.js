@@ -33,6 +33,7 @@ class StoryRenderer extends ElementBase {
     this.elements.metadata.toggleAttribute("hidden", true);
     this.elements.title.innerHTML = "";
     this.elements.content.innerHTML = this.placeholder;
+    events.fire("view:list");
   }
 
   onSelect(data) {

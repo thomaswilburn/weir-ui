@@ -131,7 +131,6 @@ class StoryList extends ElementBase {
     });
 
     this.replaceChildren(...listed);
-    if (!items.length) events.fire("view:list");
 
     this.stories = items;
     this.selectStory(items[0], false);
