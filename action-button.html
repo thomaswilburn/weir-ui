@@ -18,7 +18,7 @@
   display: none;
 }
 
-button {
+a, button {
   position: absolute;
   top: 0;
   left: 0;
@@ -42,11 +42,11 @@ button {
     width: 80px;
   }
 
-  button {
+  a, button {
     border-radius: 20px;
   }
 
-  button:hover {
+  a:hover, button:hover {
     background: var(--foreground);
   }
 }
@@ -57,8 +57,12 @@ button:disabled {
   pointer-events: none;
 }
 
-button:focus-visible {
+a:focus-visible, button:focus-visible {
   background: var(--foreground);
+}
+
+[hidden] {
+  display: none;
 }
 
 svg {
@@ -81,8 +85,9 @@ circle {
 
 </style>
 <button as="button">
-  <slot></slot>
+  <slot as="slot"></slot>
 </button>
+<a target="_blank" as="link" hidden></a>
 <svg class="progress-dot" viewBox="0 0 10 10" preserveAspectRatio="none">
   <circle
     as="delay"

@@ -77,6 +77,10 @@
   font-weight: lighter;
 }
 
+.content pre {
+  overflow-x: auto;
+}
+
 .buttons {
   position: sticky;
   bottom: 0;
@@ -133,19 +137,19 @@ action-button svg {
 
 <div class="buttons">
   <action-button as="nextButton" command="stream:next">
-    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none" role="img" aria-label="Next article">
       <path d="M3,1l9,6l9,-6 M3,8l9,7l9,-6 M3,16l9,6l9,-6" />
     </svg>
   </action-button>
 
-  <action-button as="openButton" command="reader:open-tab">
-    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
+  <action-button as="openButton">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none" role="img" aria-label="Open in new tab">
       <path d="M2,2L12,2l1,3L22,5L22,22L2,22L2,2 M6,10l12,0 M6,14l12,0 M6,18l9,0" />
     </svg>
   </action-button>
 
   <action-button as="shareButton" command="reader:share">
-    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
+    <svg viewBox="0 0 24 24" preserveAspectRatio="none" role="img" aria-label="Share">
       <circle cx="4" cy="12" r="3" />
       <circle cx="18" cy="6" r="3" />
       <circle cx="18" cy="18" r="3" />

@@ -19,8 +19,8 @@ class ActionButton extends ElementBase {
     this.elements.button.addEventListener("click", this.onClick);
   }
 
-  static observedAttributes = ["disabled", "confirm-delay"];
-  static mirroredProps = ["command"];
+  static observedAttributes = ["disabled", "confirm-delay", "href"];
+  static mirroredProps = ["command", "href"];
 
   attributeChangedCallback(attr, was, value) {
     switch (attr) {
@@ -31,6 +31,19 @@ class ActionButton extends ElementBase {
       case "disabled":
         this.elements.button.disabled = value != null;
       break;
+
+      case "href":
+        if (value != null) {
+          this.elements.link.setAttribute("href", value);
+          this.elements.link.append(this.elements.slot);
+          this.elements.link.toggleAttribute("hidden", false);
+          this.elements.button.toggleAttribute("hidden", true);
+        } else {
+          this.elements.link.removeAttribute("href");
+          this.elements.button.append(this.elements.slot);
+          this.elements.button.toggleAttribute("hidden", false);
+          this.elements.link.toggleAttribute("hidden", true);
+        }
     }
   }
 
@@ -51,6 +64,7 @@ class ActionButton extends ElementBase {
   }
 
   onClick() {
+    if (!this.command) return;
     var [ animation ] = this.elements.delay.getAnimations();
     if (animation) {
       console.log("Cancelling...");
