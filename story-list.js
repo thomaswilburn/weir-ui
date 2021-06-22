@@ -64,10 +64,15 @@ class StoryList extends ElementBase {
     var response = await get("/stream/status");
     var { total, unread, items } = response;
     events.fire("stream:counts", { total, unread });
-    // if we have no stories loaded and there are unread items,
-    // just go ahead and fetch them
-    if (!this.stories.length && unread * 1) {
-      this.getStories();
+    // if we were empty, either get items now, or
+    // (if the tab is hidden) wait for it to resurface
+    if (unread && !this.stories.length) {
+      if (document.hidden) {
+        // this can be added multiple times, it'll only fire once
+        document.addEventListener("visibilitychange", this.getStories, { once: true });
+      } else {
+        this.getStories();
+      }
     }
   }
 

@@ -26,6 +26,7 @@ class ConnectionStatus extends ElementBase {
     this.elements.domain.innerHTML = url.hostname;
 
     events.on("connection:totp-challenge", this.networkUpdate);
+    events.on("connection:successful-request", this.apiPing);
 
     this.ping();
   }
@@ -71,6 +72,12 @@ class ConnectionStatus extends ElementBase {
     } else {
       this.setStatus("offline", "Offline");
     }
+  }
+
+  apiPing() {
+    this.setStatus("connected", "Connected");
+    this.elements.auth.toggleAttribute("hidden", true);
+    this.elements.insecure.toggleAttribute("hidden", true);
   }
 
   async authenticate() {
