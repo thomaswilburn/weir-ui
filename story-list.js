@@ -66,7 +66,7 @@ class StoryList extends ElementBase {
     events.fire("stream:counts", { total, unread });
     // if we were empty, either get items now, or
     // (if the tab is hidden) wait for it to resurface
-    if (unread && !this.stories.length) {
+    if (unread * 1 && !this.stories.length) {
       if (document.hidden) {
         // this can be added multiple times, it'll only fire once
         document.addEventListener("visibilitychange", this.getStories, { once: true });
