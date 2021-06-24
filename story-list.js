@@ -20,7 +20,8 @@ class StoryList extends ElementBase {
     "getCounts",
     "markAll",
     "selectOffset",
-    "onFeature"
+    "onFeature",
+    "onTabVisibility"
   ];
 
   constructor() {
@@ -39,9 +40,12 @@ class StoryList extends ElementBase {
     events.on("stream:next", () => this.selectOffset(1));
     events.on("stream:previous", () => this.selectOffset(-1));
 
+    document.addEventListener("visibilitychange", this.onTabVisibility);
+
     this.timeout = null;
     this.selected = null;
     this.loading = null;
+    this.counts = {};
   }
 
   connectedCallback() {
@@ -175,17 +179,28 @@ class StoryList extends ElementBase {
 
   updateCounts(e) {
     var { unread, total } = e;
+    unread *= 1;
     this.elements.unread.innerHTML = unread;
     this.elements.total.innerHTML = total;
 
     document.title = `Weir (${unread})`;
+    this.setFavicon(unread && unread != this.counts.unread);
+    this.counts = { unread, total };
+  }
 
+  setFavicon(alert) {
     favicon.remove();
     favicon = document.createElement("link");
     favicon.rel = "icon";
     favicon.setAttribute("type", "image/png");
-    favicon.href = `./${unread * 1 ? "favicon" : "favicon-nulled"}.png`;
+    favicon.href = `./${alert ? "favicon" : "favicon-nulled"}.png`;
     document.head.appendChild(favicon);
+  }
+
+  onTabVisibility() {
+    if (document.visible) {
+      this.setFavicon(false);
+    }
   }
 }
 
