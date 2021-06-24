@@ -70,7 +70,8 @@ class StoryList extends ElementBase {
     events.fire("stream:counts", { total, unread });
     // if we were empty, either get items now, or
     // (if the tab is hidden) wait for it to resurface
-    if (unread * 1 && !this.stories.length) {
+    unread *= 1;
+    if (unread && !this.stories.length) {
       if (document.hidden) {
         // this can be added multiple times, it'll only fire once
         document.addEventListener("visibilitychange", this.getStories, { once: true });
@@ -182,18 +183,18 @@ class StoryList extends ElementBase {
     unread *= 1;
     this.elements.unread.innerHTML = unread;
     this.elements.total.innerHTML = total;
-
     document.title = `Weir (${unread})`;
     this.setFavicon(unread && unread != this.counts.unread);
     this.counts = { unread, total };
   }
 
-  setFavicon(alert) {
+  async setFavicon(alert) {
     favicon.remove();
     favicon = document.createElement("link");
     favicon.rel = "icon";
     favicon.setAttribute("type", "image/png");
     favicon.href = `./${alert ? "favicon" : "favicon-nulled"}.png`;
+    await new Promise(ok => requestAnimationFrame(ok));
     document.head.appendChild(favicon);
   }
 
