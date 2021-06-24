@@ -198,7 +198,7 @@ class StoryList extends ElementBase {
   }
 
   onTabVisibility() {
-    if (document.visible) {
+    if (!document.hidden) {
       this.setFavicon(false);
     }
   }
